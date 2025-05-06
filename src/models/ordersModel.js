@@ -8,7 +8,7 @@ const ordersSchema = new mongoose.Schema({
     },
     orderStatus:{
         type:String,
-        default:'pending'
+        default:'PENDING'
     },
     total:{
         type:Number

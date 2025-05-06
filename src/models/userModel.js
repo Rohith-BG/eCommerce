@@ -22,14 +22,19 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    userRole:{
+    userRole:[{
         type:String,
-    },
+        required:true
+    }], 
     createdAt:{
         type: Date , default : Date.now
     },
     updatedBy:{
         type:String
+    },
+    updatedAt:{
+        type:Date,
+        default:Date.now
     }
 })
 

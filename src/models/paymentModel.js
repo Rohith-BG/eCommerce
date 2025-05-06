@@ -11,11 +11,11 @@ const paymentSchema = new mongoose.Schema({
         ref:'User',
         require:true
     },
-    paymentMethod:{
+    method:{
         type:String,
         reqired:true
     },
-    paymentDetails:{
+    details:{
         type:String,
         required:true
     },

@@ -19,14 +19,22 @@ const orderItemSchema = new mongoose.Schema({
         type:Number,
         required:true
     },
-    addedAt:{
+    createdBy:{
+        type:String,
+        required:true
+    },
+    createdAt:{
         type:Date,
         default:Date.now
+    },
+    updatedBy:{
+        type:String,
+        required:true
     },
     updatedAt:{
         type:Date,
         default:Date.now
-    }
+    },
 })
 
 const orderItem = mongoose.model('orderItem',orderItemSchema);

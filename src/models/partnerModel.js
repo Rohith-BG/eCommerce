@@ -1,7 +1,7 @@
-import mongoose, { modelNames } from "mongoose";
+import mongoose from "mongoose";
 
 const partnerSchema = new mongoose.Schema({
-    partnerName:{
+    name:{
         type:String,
         required:true
     },
@@ -13,11 +13,11 @@ const partnerSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    partnerType:{
+    type:{
         type:String,
         required:true
     },
-    partnerStatus:{
+    status:{
         type:String,
         default:{pending}
     },
