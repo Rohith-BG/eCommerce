@@ -18,7 +18,7 @@ const shipmentSchema = new mongoose.Schema({
     },
     shipmentStatus:{
         type:String,
-        default:'initiatied'
+        default:'INITIATIED'
     },
 })
 

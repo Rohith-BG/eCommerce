@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 import bcrypt from 'bcrypt';
 
 const userSchema = new mongoose.Schema({
-    username:{
+    name:{
         type:String,
         required:true
     },
@@ -22,15 +22,19 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    userRole:[{
-        type:String,
+    roles:{
+        type:[String],
+        default:['user'],
         required:true
-    }], 
+    },
     createdAt:{
-        type: Date , default : Date.now
+        type: Date ,
+        default : Date.now
     },
     updatedBy:{
-        type:String
+        type:String,
+        default:"None",
+        required:true
     },
     updatedAt:{
         type:Date,

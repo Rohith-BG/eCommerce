@@ -19,14 +19,15 @@ const partnerSchema = new mongoose.Schema({
     },
     status:{
         type:String,
-        default:{pending}
+        default:'PENDING'
     },
     createdAt:{
         type:Date,
         default:Date.now
     },
     updatedAt:{
-        type:Date
+        type:Date,
+        default:Date.now
     }
 })
 
