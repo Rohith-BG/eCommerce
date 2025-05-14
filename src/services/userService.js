@@ -1,42 +1,54 @@
 import User from "../models/userModel.js"
 
 
-export const createUser = async (userObj)=>{
+export async function createUser(userObj){
     try{
         const createdUser = await User.create(userObj);
-        console.log(createdUser); 
+        if(!createdUser){
+            throw new Error('Failed to create a user');
+        }
         return createdUser;  
-    }catch(err){
-        console.log(err);
+    }catch(error){
+        throw error;
     }
 }
 
-export const fetchUser = async (userId)=>{
+export async function fetchUser(userId){
     try{
-        return await User.findById(userId);
+        const user = await User.findById(userId);
+        if(!user){
+            throw new Error('User not found');
+        }
+        return user;
     }catch(err){
-        console.log(err);
+       throw err;
     }
 }
 
-export const updateUser = async(userId,newUserData)=>{
+export async function updateUser(userId,newUserData){
     try{
        const updatedUser = await User.findByIdAndUpdate(userId,newUserData,{new:true});
+       if(!updatedUser){
+          throw new Error('Failed to update the user')
+       }
        return updatedUser;
     }
-    catch(err){
-        console.log(err);
+    catch(error){
+        throw err;
     }
 }
 
 
-export const deleteUserById = async (userId) =>{
+export async function deleteUserById(userId){
     try{
         const deletedUser = await User.findByIdAndDelete(userId);
+        if(!deletedUser){
+            throw new Error('Failed to delete the user')
+        }
         return deletedUser;
     }   
     catch(err){
-        console.log(err);
+        throw err;
     }
 
 }
