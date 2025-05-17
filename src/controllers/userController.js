@@ -4,13 +4,13 @@ import {createUser,fetchUser,updateUser,deleteUserById} from "../services/userSe
 export async function signUser(req,res){
     try{
         const user = req.body;
-        
+
         const createdUser = await createUser(user);
      
         res.status(201).json(createdUser);
     }
     catch(err){
-        res.status(500).json({message:err.message});
+        res.status(400).send(err.stack);
     }
 }
 
@@ -35,10 +35,10 @@ export async function updateUserData (req,res){
         const updatedData = req.body;
         const newData = await updateUser(userId,updatedData);
       
-        return res.json({"updatedData":newData});
+        return res.status(200).json({"updatedData":newData});
     }
     catch(err){
-        return res.status(500).json({message:err.message})
+        return res.status(500).json(err.stack)
     }
 }
 
@@ -48,15 +48,17 @@ export async function updateUserData (req,res){
 export async function deleteUser(req,res){
     try{
         const userId = req.query.id;
-       
+        if(!userId){
+            throw new Error('User Id is a required field');
+        }
         await deleteUserById(userId);
-
         return res.status(200).json({'message':'User deleted succesfully'})
-       
-      
     }
     catch(err){
-        return res.json({message:err.message})
+        if(err.message==='User Id is a required field'){
+            return res.status(400).json({message:'Used Id is a required field'});
+        }
+        return res.status(404).json({message:'user not found to delete'})
     }
 }
 

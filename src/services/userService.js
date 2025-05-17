@@ -34,7 +34,7 @@ export async function updateUser(userId,newUserData){
        return updatedUser;
     }
     catch(error){
-        throw err;
+        throw error;
     }
 }
 
