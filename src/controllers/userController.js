@@ -48,16 +48,12 @@ export async function updateUserData (req,res){
 export async function deleteUser(req,res){
     try{
         const userId = req.query.id;
-        if(!userId){
-            throw new Error('User Id is a required field');
-        }
+        
         await deleteUserById(userId);
         return res.status(200).json({'message':'User deleted succesfully'})
     }
     catch(err){
-        if(err.message==='User Id is a required field'){
-            return res.status(400).json({message:'Used Id is a required field'});
-        }
+       
         return res.status(404).json({message:'user not found to delete'})
     }
 }
