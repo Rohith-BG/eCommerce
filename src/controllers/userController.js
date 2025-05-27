@@ -48,12 +48,10 @@ export async function updateUserData (req,res){
 export async function deleteUser(req,res){
     try{
         const userId = req.query.id;
-        
         await deleteUserById(userId);
         return res.status(200).json({'message':'User deleted succesfully'})
     }
     catch(err){
-       
         return res.status(404).json({message:'user not found to delete'})
     }
 }

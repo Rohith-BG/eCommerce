@@ -1,13 +1,12 @@
 import mongoose from "mongoose";
-import Category from "./categoryModel.js";
 
 const productSchema = new mongoose.Schema({
-    productName:{
+    name:{
         type:String,
         required:true
     },
     price:{
-        type:String,
+        type:Number,
         required:true
     },
     productDetails:{
@@ -15,7 +14,7 @@ const productSchema = new mongoose.Schema({
         required:true
     },
     stockQuantity:{
-        type:String,
+        type:Number,
         required:true
     },
     category:{
@@ -23,13 +22,13 @@ const productSchema = new mongoose.Schema({
         ref:'Category',
         required:true
     },
-    createdAt:{
-        type:Date,default:new Date.now
-    },
-    updatedAt:{
-        type:Date,default:new Date.now
+    soldBy:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'partner',
+        required:true
     }
-})
+},
+{timestamps:true});
 
 const product = mongoose.model('product',productSchema);
 

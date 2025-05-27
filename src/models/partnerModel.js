@@ -21,15 +21,7 @@ const partnerSchema = new mongoose.Schema({
         type:String,
         default:'PENDING'
     },
-    createdAt:{
-        type:Date,
-        default:Date.now
-    },
-    updatedAt:{
-        type:Date,
-        default:Date.now
-    }
-})
+},{timestamps:true});
 
 
 const partner = mongoose.model('partner',partnerSchema);

@@ -1,23 +1,17 @@
 import mongoose from 'mongoose'
 
+
 const categorySchema = new mongoose.Schema({
-    categoryName:{
+    name:{
         type:String,
         required:true
     },
     createdBy:{
-        type:String,
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User',
         required:true
-    },
-    createdAt:{
-        type:Date,
-        default:Date.now
-    },
-    updatedAt:{
-        type:Date,
-        default:Date.now
     }
-})
+},{timestamps:true});
 
 const Category = mongoose.model('Category',categorySchema);
 
