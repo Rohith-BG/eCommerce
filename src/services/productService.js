@@ -1,9 +1,8 @@
-import User from '../models/userModel.js'
-import partner from '../models/partnerModel.js'
+
 import product from '../models/productModel.js'
 
 
-export async function createProductService(productObj){
+export async function create(productObj){
     try{
         const createdProduct=await product.create(productObj);
         if(!createdProduct){
@@ -17,12 +16,9 @@ export async function createProductService(productObj){
 
 }
 
-export async function getAllProductService(){
+export async function getAll(){
     try{
-        const products = await product.find().populate([
-            {path:'category', select:'name -_id'},
-            {path:'soldBy', select:'name -_id'}
-        ]);
+        const products = await product.find();
         if(!products){
             throw new Error ("No existing products");
         }
@@ -35,7 +31,7 @@ export async function getAllProductService(){
 }
 
 
-export async function updateProductService(productId,updateDetails){
+export async function update(productId,updateDetails){
     try{
         const updatedProduct = await product.findByIdAndUpdate(productId,updateDetails,{new:true});
 
@@ -50,7 +46,7 @@ export async function updateProductService(productId,updateDetails){
     }
 }
 
-export async function deleteProductService(productId){
+export async function deleteTheProduct(productId){
     try{
         const deletedProduct = await product.findByIdAndDelete(productId);
         if(!deletedProduct){

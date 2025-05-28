@@ -1,6 +1,6 @@
 import partner from "../models/partnerModel.js"
 
-export async function createPartner(partnerObj){
+export async function create(partnerObj){
     try{
         const newPartner = await partner.create(partnerObj);
         if(!newPartner){
@@ -26,7 +26,7 @@ export async function findPartner(partnerId){
     }
 }
 
-export async function updatePartner(partnerId,updateData){
+export async function update(partnerId,updateData){
     try{
         const updatedPartner = await partner.findByIdAndUpdate(partnerId,updateData,{new:true});
         if(!updatedPartner){
@@ -39,10 +39,10 @@ export async function updatePartner(partnerId,updateData){
     }
 }
 
-export async function deletePartner(partnerId){
+export async function deleteThePartner(partnerId){
     try{
-        const deletedUser = await partner.findByIdAndDelete(partnerId);
-        if(!deletedUser){
+        const deletedPartner = await partner.findByIdAndDelete(partnerId);
+        if(!deletedPartner){
             throw new Error('Partner deletion failed');
         }
         return deletedUser;

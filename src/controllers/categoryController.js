@@ -1,11 +1,11 @@
-import { createCategoryService, deleteCategoryService, getAllCategoryService, updateCategoryService } from "../services/categoryService.js";
+import { create,  deletion, getAll, update } from "../services/categoryService.js";
+
 
 export async function createCategory (req,res){
     try{
         const categoryObj = req.body;
-        console.log(categoryObj);
 
-        const newCategory = await createCategoryService(categoryObj);
+        const newCategory = await create(categoryObj);
 
         res.status(201).json({"Created Category":newCategory});
     }
@@ -16,7 +16,7 @@ export async function createCategory (req,res){
 
 export async function getAllCategory(req,res){
     try{
-        const availableCategories = await getAllCategoryService();
+        const availableCategories = await getAll();
 
         res.status(200).json({Categories:availableCategories});
     }
@@ -30,7 +30,7 @@ export async function updateCategory (req,res){
         const categoryId = req.params.id;
         const updateDetails = req.body;
 
-        const updatedCategory = await updateCategoryService(categoryId,updateDetails);
+        const updatedCategory = await update(categoryId,updateDetails);
 
         res.status(200).json({"Updated Category":updatedCategory})
     }
@@ -44,11 +44,11 @@ export async function deleteCategory (req,res){
     try{
         const categoryId = req.params.id;
         
-        await deleteCategoryService(categoryId);
+        await deletion(categoryId);
 
         res.status(200).json({'message':'Category deleted successfully'})
     }
     catch(err){
-        res.status(500).json(err.stack);
+        res.status(400).json(err.stack);
     }
 }

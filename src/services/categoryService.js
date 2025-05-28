@@ -2,7 +2,7 @@ import Category from "../models/categoryModel.js";
 
 
 
-export async function createCategoryService(categoryObj){
+export async function create(categoryObj){
     try{
         const createdCategory = await Category.create(categoryObj);
         if(!createdCategory){
@@ -15,11 +15,10 @@ export async function createCategoryService(categoryObj){
     }
 } 
 
-export async function getAllCategoryService(){
+export async function getAll(){
     try{
         const categories = await Category.find().populate('createdBy','name -_id');
         
-
         if(!categories){
             throw new Error('No existing categories');
         }
@@ -30,7 +29,7 @@ export async function getAllCategoryService(){
     }
 }
 
-export async function updateCategoryService(categoryId,updateDetails){
+export async function update(categoryId,updateDetails){
     try{
         const updatedCategory = await Category.findByIdAndUpdate(categoryId,updateDetails);
         if(!updatedCategory){
@@ -39,14 +38,12 @@ export async function updateCategoryService(categoryId,updateDetails){
         return updatedCategory;
     }
     catch(err){
-
         throw err;
     }
 }
 
 
-/// Have to handle this as the product has reference on the category 
-export async function deleteCategoryService(categoryId){
+export async function deletion(categoryId){
     try{
         const deletedCategory = await Category.findByIdAndDelete(categoryId);
 
@@ -56,7 +53,7 @@ export async function deleteCategoryService(categoryId){
 
     }
     catch(err){
-        console.log(err);
+        
         throw err;
     }
 }
