@@ -1,4 +1,4 @@
-import { create,  deletion, getAll, update } from "../services/categoryService.js";
+import { create,deletion, getAll, update } from "../services/categoryService.js";
 
 
 export async function createCategory (req,res){
@@ -27,7 +27,7 @@ export async function getAllCategory(req,res){
 
 export async function updateCategory (req,res){
     try{
-        const categoryId = req.params.id;
+        const categoryId = req.query.id;
         const updateDetails = req.body;
 
         const updatedCategory = await update(categoryId,updateDetails);
@@ -42,7 +42,7 @@ export async function updateCategory (req,res){
 
 export async function deleteCategory (req,res){
     try{
-        const categoryId = req.params.id;
+        const categoryId = req.query.id;
         
         await deletion(categoryId);
 
