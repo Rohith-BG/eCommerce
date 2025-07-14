@@ -6,7 +6,7 @@ export async function createPartner(req,res){
 
         const partner = await create(partnerObj);
 
-        res.status(201).json({'PartnerCreated':partner});
+        res.status(201).json(partner);
         
     }
     catch(err){
@@ -20,10 +20,10 @@ export async function getPartner(req,res){
          
         const partnerDetails = await findPartner(partnerId);
 
-       return res.status(200).json({"Partner":partnerDetails});
+       return res.status(200).json(partnerDetails);
     }
     catch(err){
-        res.status(404).json({'messaage':'Partner not found'});
+        res.status(404).json(err.stack);
     }
 }
 
@@ -32,7 +32,7 @@ export async function updatePartner(req,res){
     const updateData = req.body;
     try{
         const updatedPartner = await update(partnerId,updateData);
-        res.status(200).json({'UpdatedDetails':updatedPartner});
+        res.status(200).json(updatedPartner);
     }
     catch(err){
         res.status(400).json(err.stack);
@@ -45,7 +45,6 @@ export async function deletePartner (req,res){
     try{
         const deletedPartner = await deleteThePartner(partnerId);
         res.status(200).json(deletedPartner);
-        // res.status(200).json({'message':'Partner Account Deleted Successfully'})
     }
     catch(err){
         res.status(400).json(err.stack);

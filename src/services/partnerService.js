@@ -28,6 +28,10 @@ export async function findPartner(partnerId){
 
 export async function update(partnerId,updateData){
     try{
+        const existingPartner = await partner.findById(partnerId);
+        if(!existingPartner){
+            throw new Error(`partner with this Id doesnot exists`);
+        }
         const updatedPartner = await partner.findByIdAndUpdate(partnerId,updateData,{new:true});
         if(!updatedPartner){
             throw new Error(`Cannot update the user`);

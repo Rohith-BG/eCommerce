@@ -17,7 +17,7 @@ export async function create(categoryObj){
 
 export async function getAll(){
     try{
-        const categories = await Category.find().populate('createdBy','name -_id');
+        const categories = await Category.find();
         
         if(!categories){
             throw new Error('No existing categories');
@@ -50,6 +50,8 @@ export async function deletion(categoryId){
         if(!deletedCategory){
             throw new Error ('Failed to delete');
         }
+
+        return deletedCategory;
 
     }
     catch(err){
