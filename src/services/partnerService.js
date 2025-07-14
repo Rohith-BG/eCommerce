@@ -28,6 +28,7 @@ export async function findPartner(partnerId){
 
 export async function update(partnerId,updateData){
     try{
+        // check for the existence partner with that id
         const existingPartner = await partner.findById(partnerId);
         if(!existingPartner){
             throw new Error(`partner with this Id doesnot exists`);

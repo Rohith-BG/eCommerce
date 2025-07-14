@@ -31,7 +31,16 @@ export async function getAll(){
 
 export async function update(categoryId,updateDetails){
     try{
+        //checking for the currentData in DB with the client sent data
+    
+        const currentData = await Category.findById(categoryId);
+
+        if(currentData===updateDetails){
+            return currentData;
+        }
+
         const updatedCategory = await Category.findByIdAndUpdate(categoryId,updateDetails);
+
         if(!updatedCategory){
             throw new Error('Updation failed');
         }
@@ -55,7 +64,6 @@ export async function deletion(categoryId){
 
     }
     catch(err){
-        
         throw err;
     }
 }

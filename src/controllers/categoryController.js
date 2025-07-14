@@ -1,4 +1,4 @@
-import { create,deletion, getAll, update } from "../services/categoryService.js";
+import { create,  deletion, getAll, update } from "../services/categoryService.js";
 
 
 export async function createCategory (req,res){
@@ -7,7 +7,7 @@ export async function createCategory (req,res){
 
         const newCategory = await create(categoryObj);
 
-        res.status(201).json({"Created Category":newCategory});
+        res.status(201).json(newCategory);
     }
     catch(err){
         res.status(400).json(err.stack);
@@ -18,7 +18,7 @@ export async function getAllCategory(req,res){
     try{
         const availableCategories = await getAll();
 
-        res.status(200).json({Categories:availableCategories});
+        res.status(200).json(availableCategories);
     }
     catch(err){
         res.status(404).json(err.stack);
@@ -32,7 +32,7 @@ export async function updateCategory (req,res){
 
         const updatedCategory = await update(categoryId,updateDetails);
 
-        res.status(200).json({"Updated Category":updatedCategory})
+        res.status(200).json(updatedCategory);
     }
     catch(err){
         res.status(400).json(err.stack);
@@ -44,9 +44,9 @@ export async function deleteCategory (req,res){
     try{
         const categoryId = req.query.id;
         
-        await deletion(categoryId);
+        const deletedCategory = await deletion(categoryId);
 
-        res.status(200).json({'message':'Category deleted successfully'})
+        res.status(200).json(deletedCategory);
     }
     catch(err){
         res.status(400).json(err.stack);

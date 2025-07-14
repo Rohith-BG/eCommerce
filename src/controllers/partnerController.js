@@ -6,7 +6,7 @@ export async function createPartner(req,res){
 
         const partner = await create(partnerObj);
 
-        res.status(201).json(partner);
+        return res.status(201).json(partner);
         
     }
     catch(err){
@@ -28,11 +28,11 @@ export async function getPartner(req,res){
 }
 
 export async function updatePartner(req,res){
-    const partnerId = req.query.id;
-    const updateData = req.body;
     try{
+        const partnerId = req.query.id;
+        const updateData = req.body;
         const updatedPartner = await update(partnerId,updateData);
-        res.status(200).json(updatedPartner);
+        return res.status(200).json(updatedPartner);
     }
     catch(err){
         res.status(400).json(err.stack);
@@ -40,9 +40,8 @@ export async function updatePartner(req,res){
 }
 
 export async function deletePartner (req,res){
-    const partnerId = req.query.id;
-
     try{
+        const partnerId = req.query.id;
         const deletedPartner = await deleteThePartner(partnerId);
         res.status(200).json(deletedPartner);
     }
