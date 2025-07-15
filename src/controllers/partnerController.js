@@ -42,8 +42,8 @@ export async function updatePartner(req,res){
 export async function deletePartner (req,res){
     try{
         const partnerId = req.query.id;
-        const deletedPartner = await deleteThePartner(partnerId);
-        res.status(200).json(deletedPartner);
+        const deletedPartner = await deletePartnerById(partnerId);
+        return res.status(200).json(deletedPartner);
     }
     catch(err){
         res.status(400).json(err.stack);

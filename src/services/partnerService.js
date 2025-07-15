@@ -15,11 +15,11 @@ export async function create(partnerObj){
 
 export async function findPartner(partnerId){
     try{
-        const partnerData= await partner.findById(partnerId);
-        if(!partnerData){
+        const partner= await partner.findById(partnerId);
+        if(!partner){
             throw new Error('Parnter with that Id is not found');
         }
-        return partnerData;
+        return partner;
     }
     catch(err){
         throw err;
@@ -44,7 +44,7 @@ export async function update(partnerId,updateData){
     }
 }
 
-export async function deleteThePartner(partnerId){
+export async function deletePartnerById(partnerId){
     try{
         const deletedPartner = await partner.findByIdAndDelete(partnerId);
         if(!deletedPartner){
