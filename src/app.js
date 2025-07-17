@@ -11,7 +11,7 @@ app.use(cors());
 
 app.use('/user',userRoute);
 app.use('/partner',partnerRoute);
-app.use('/api',categoryRoute);
+app.use('/',categoryRoute);
 app.use('/product',productRoute);
 
 export default app;
