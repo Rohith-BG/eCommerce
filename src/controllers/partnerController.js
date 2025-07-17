@@ -1,4 +1,4 @@
-import { create, deleteThePartner, findPartner, update} from "../services/partnerService.js";
+import { create, deletePartnerById, findPartner, update} from "../services/partnerService.js";
 
 export async function createPartner(req,res){
     try{

@@ -2,20 +2,20 @@ import Category from "../models/categoryModel.js";
 
 
 
-export async function create(categoryObj){
+export async function insertCategory(categoryData){
     try{
-        const createdCategory = await Category.create(categoryObj);
-        if(!createdCategory){
+        const category = await Category.create(categoryData);
+        if(!category){
             throw new Error("Error in creating a new Category");
         }
-        return createdCategory;
+        return category;
     }
     catch(err){
         throw err;
     }
 } 
 
-export async function getAll(){
+export async function getAllCategories(){
     try{
         const categories = await Category.find();
         
@@ -29,7 +29,7 @@ export async function getAll(){
     }
 }
 
-export async function update(categoryId,updateDetails){
+export async function modifyCategoryById(categoryId,updateDetails){
     try{
         //checking for the currentData in DB with the client sent data
     
@@ -52,7 +52,7 @@ export async function update(categoryId,updateDetails){
 }
 
 
-export async function deletion(categoryId){
+export async function deleteCategoryById(categoryId){
     try{
         const deletedCategory = await Category.findByIdAndDelete(categoryId);
 

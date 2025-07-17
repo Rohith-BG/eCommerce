@@ -1,6 +1,6 @@
 import partner from "../models/partnerModel.js"
 
-export async function create(partnerObj){
+export async function insertPartner(partnerObj){
     try{
         const newPartner = await partner.create(partnerObj);
         if(!newPartner){
@@ -13,20 +13,20 @@ export async function create(partnerObj){
     }
 }
 
-export async function findPartner(partnerId){
+export async function getPartnerById(partnerId){
     try{
-        const partner= await partner.findById(partnerId);
-        if(!partner){
+        const partnerData= await partner.findById(partnerId);
+        if(!partnerData){
             throw new Error('Parnter with that Id is not found');
         }
-        return partner;
+        return partnerData;
     }
     catch(err){
         throw err;
     }
 }
 
-export async function update(partnerId,updateData){
+export async function modifyPartnerById(partnerId,updateData){
     try{
         // check for the existence partner with that id
         const existingPartner = await partner.findById(partnerId);
