@@ -9,9 +9,16 @@ import productRoute from './routes/productRoute.js'
 app.use(express.json());
 app.use(cors());
 
+<<<<<<< HEAD
 app.use('/user',userRoute);
 app.use('/partner',partnerRoute);
 app.use('/',categoryRoute);
 app.use('/product',productRoute);
+=======
+app.use('/users',userRoute);
+app.use('/partners',partnerRoute);
+app.use('/categories',categoryRoute);
+app.use('/products',productRoute);
+>>>>>>> e212267 (Updated the naming convention's)
 
 export default app;

@@ -3,13 +3,13 @@ import { createPartner , getPartner, updatePartner, deletePartner} from '../cont
 
 const router = express.Router();
 
-router.post('/createPartner',createPartner);
+router.post('/',createPartner);
 
-router.get('/details/:id',getPartner);
+router.get('/',getPartner);
 
-router.put('/updateDetails/:id',updatePartner);
+router.put('/',updatePartner);
 
-router.delete('/delete/:id',deletePartner)
+router.delete('/',deletePartner)
 
 export default router;
 

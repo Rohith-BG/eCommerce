@@ -15,7 +15,7 @@ export async function insertPartner(partnerObj){
 
 export async function getPartnerById(partnerId){
     try{
-        const partnerData= await partner.findById(partnerId);
+        const partnerData = await partner.findById(partnerId);
         if(!partnerData){
             throw new Error('Parnter with that Id is not found');
         }
@@ -26,13 +26,9 @@ export async function getPartnerById(partnerId){
     }
 }
 
-export async function modifyPartnerById(partnerId,updateData){
+export async function updatePartnerById(partnerId,updateData){
     try{
-        // check for the existence partner with that id
-        const existingPartner = await partner.findById(partnerId);
-        if(!existingPartner){
-            throw new Error(`partner with this Id doesnot exists`);
-        }
+        
         const updatedPartner = await partner.findByIdAndUpdate(partnerId,updateData,{new:true});
         if(!updatedPartner){
             throw new Error(`Cannot update the user`);

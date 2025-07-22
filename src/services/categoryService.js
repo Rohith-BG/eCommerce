@@ -15,7 +15,7 @@ export async function insertCategory(categoryData){
     }
 } 
 
-export async function getAllCategories(){
+export async function getCategories(){
     try{
         const categories = await Category.find();
         
@@ -29,16 +29,9 @@ export async function getAllCategories(){
     }
 }
 
-export async function modifyCategoryById(categoryId,updateDetails){
+export async function updateCategoryById(categoryId,updateDetails){
     try{
-        //checking for the currentData in DB with the client sent data
-    
-        const currentData = await Category.findById(categoryId);
-
-        if(currentData===updateDetails){
-            return currentData;
-        }
-
+        
         const updatedCategory = await Category.findByIdAndUpdate(categoryId,updateDetails);
 
         if(!updatedCategory){
