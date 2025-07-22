@@ -1,54 +1,58 @@
-import { createPartner , deletePartner, findPartner, updatePartner} from "../services/partnerService.js";
+import { insertPartner, deletePartnerById, getPartnerById , updatePartnerById } from "../services/partnerService.js";
 
-export async function signPartner(req,res){
+export async function createPartner(req,res){
     try{
-        const partnerObj = req.body;
+        const partnerObj = req?.body;
 
-        const partner = await createPartner(partnerObj);
+        const partner = await insertPartner(partnerObj);
 
-        res.status(201).json({'PartnerCreated':partner});
+        res.status(201).json(partner);
         
     }
     catch(err){
-        res.status(400).json(err.message+'Try again including the required field');
+        res.status(400).json(err.stack);
     }
 }
 
 export async function getPartner(req,res){
     try{
-        const partnerId = req.params.id;
+        const partnerId = req?.query?.id;
          
-        const partnerDetails = await findPartner(partnerId);
+        const partner = await getPartnerById(partnerId);
 
-
-        return res.status(200).json({"Partner":partnerDetails});
+        res.status(200).json(partner);
     }
     catch(err){
-        res.status(404).json({'messaage':'Partner with that Id is not found'});
+        res.status(404).json(err.stack);
     }
 }
 
-export async function Update(req,res){
-    const partnerId = req.params.id;
-    const updateData = req.body;
+export async function updatePartner(req,res){
     try{
-        const UpdatedPartner = await updatePartner(partnerId,updateData);
-        res.status(200).json({'UpdatedDetails':UpdatedPartner});
+        const partnerId = req?.query?.id;
+        console.log(partnerId)
+        console.log(typeof(partnerId))
+
+        if(!partnerId){
+            throw Object.assign(new Error("partner id is mandtory"),{statusCode:400} )
+        }
+        const updateData = req?.body;
+        const partner = await updatePartnerById(partnerId,updateData);
+        res.status(200).json(partner);
     }
     catch(err){
-        res.status(500).json({'Error message':'Updation failed'});
+        console.log(`IN catch block`,err.code)
+        res.status(err.statusCode).json(err.stack);
     }
 }
 
-export async function deleteAccount (req,res){
-    const partnerId = req.params.id;
-
+export async function deletePartner (req,res){
     try{
-        const deletedPartner = await deletePartner(partnerId);
-        res.json(deletedPartner);
-        // res.status(200).json({'message':'Partner Account Deleted Successfully'})
+        const partnerId = req?.query?.id;
+        const partner = await deletePartnerById(partnerId);
+        res.status(200).json(partner);
     }
     catch(err){
-        res.status(500).json({'Error message':'Failed to Delete'});
+        res.status(400).json(err.stack);
     }
 }    

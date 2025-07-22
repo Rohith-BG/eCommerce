@@ -1,15 +1,15 @@
 import express from 'express'
-import { signPartner , getPartner, Update, deleteAccount} from '../controllers/partnerController.js'
+import { createPartner , getPartner, updatePartner, deletePartner} from '../controllers/partnerController.js'
 
 const router = express.Router();
 
-router.post('/createPartner',signPartner);
+router.post('/',createPartner);
 
-router.get('/details/:id',getPartner);
+router.get('/',getPartner);
 
-router.put('/updateDetails/:id',Update);
+router.put('/',updatePartner);
 
-router.delete('/delete/:id',deleteAccount)
+router.delete('/',deletePartner)
 
 export default router;
 

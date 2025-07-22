@@ -1,6 +1,6 @@
 import partner from "../models/partnerModel.js"
 
-export async function createPartner(partnerObj){
+export async function insertPartner(partnerObj){
     try{
         const newPartner = await partner.create(partnerObj);
         if(!newPartner){
@@ -13,9 +13,9 @@ export async function createPartner(partnerObj){
     }
 }
 
-export async function findPartner(partnerId){
+export async function getPartnerById(partnerId){
     try{
-        const partnerData= await partner.findById(partnerId);
+        const partnerData = await partner.findById(partnerId);
         if(!partnerData){
             throw new Error('Parnter with that Id is not found');
         }
@@ -26,8 +26,9 @@ export async function findPartner(partnerId){
     }
 }
 
-export async function updatePartner(partnerId,updateData){
+export async function updatePartnerById(partnerId,updateData){
     try{
+        
         const updatedPartner = await partner.findByIdAndUpdate(partnerId,updateData,{new:true});
         if(!updatedPartner){
             throw new Error(`Cannot update the user`);
@@ -39,10 +40,10 @@ export async function updatePartner(partnerId,updateData){
     }
 }
 
-export async function deletePartner(partnerId){
+export async function deletePartnerById(partnerId){
     try{
-        const deletedUser = await partner.findByIdAndDelete(partnerId);
-        if(!deletedUser){
+        const deletedPartner = await partner.findByIdAndDelete(partnerId);
+        if(!deletedPartner){
             throw new Error('Partner deletion failed');
         }
         return deletedUser;
