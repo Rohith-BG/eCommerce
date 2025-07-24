@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const orderItemSchema = new mongoose.Schema({
     orderId:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'orders',
+        ref:'Orders',
         required:true
     },
     productId:{
@@ -12,7 +12,7 @@ const orderItemSchema = new mongoose.Schema({
         required:true
     },
     quantity:{
-        type:Number,
+        type: Number,
         required:true
     },
     priceAtPurchase:{
@@ -23,21 +23,14 @@ const orderItemSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    createdAt:{
-        type:Date,
-        default:Date.now
-    },
     updatedBy:{
         type:String,
         required:true
     },
-    updatedAt:{
-        type:Date,
-        default:Date.now
-    },
-})
+},
+{timestamps:true});
 
-const orderItem = mongoose.model('orderItem',orderItemSchema);
+const OrderItem = mongoose.model('OrderItem',orderItemSchema);
 
-export default orderItem;
+export default OrderItem;
 

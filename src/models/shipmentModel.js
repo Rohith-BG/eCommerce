@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const shipmentSchema = new mongoose.Schema({
     orderId:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'orders'
+        ref:'Orders'
     },
     address:{
         type:String,
@@ -22,6 +22,6 @@ const shipmentSchema = new mongoose.Schema({
     },
 })
 
- const shipment = mongoose.model('shipment',shipmentSchema);
+ const Shipment = mongoose.model('Shipment',shipmentSchema);
 
- export default shipment ;
+ export default Shipment ;
