@@ -13,16 +13,9 @@ const ordersSchema = new mongoose.Schema({
     total:{
         type:Number
     },
-    createdAt:{
-        type:Date,
-        default:Date.now
-    },
-    updateAt:{
-        type:Date,
-        default:Date.now
-    }
-})
+},
+{timestamps:true});
 
-const orders = mongoose.model('orders',ordersSchema);
+const Orders = mongoose.model('Orders',ordersSchema);
 
-export default orders;
+export default Orders;

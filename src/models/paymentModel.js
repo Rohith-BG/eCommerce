@@ -30,6 +30,6 @@ const paymentSchema = new mongoose.Schema({
 
 })
 
-const payment = mongoose.model('payment',paymentSchema);
+const Payment = mongoose.model('Payment',paymentSchema);
 
-export default payment ;
+export default Payment ;
