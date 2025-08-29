@@ -30,9 +30,6 @@ export async function getPartner(req,res){
 export async function updatePartner(req,res){
     try{
         const partnerId = req?.query?.id;
-        console.log(partnerId)
-        console.log(typeof(partnerId))
-
         if(!partnerId){
             throw Object.assign(new Error("partner id is mandtory"),{statusCode:400} )
         }

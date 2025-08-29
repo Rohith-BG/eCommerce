@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Orders from "./ordersModel.js";
 
 const orderItemSchema = new mongoose.Schema({
     orderId:{
@@ -29,6 +30,25 @@ const orderItemSchema = new mongoose.Schema({
     },
 },
 {timestamps:true});
+
+async function calculateOrderTotal(orderId) {
+    const order = await mongoose.model("OrderItem").aggregate([
+      { $match: { orderId: new mongoose.Types.ObjectId(orderId) } },
+      {
+        $group: {
+          _id: null,
+          total: { $sum: { $multiply: ["$priceAtPurchase", "$quantity"] } }
+        }
+      }
+    ]);
+  
+    const total = order[0]?.total || 0;
+    await Orders.findByIdAndUpdate(orderId, { total });
+}
+
+orderItemSchema.post(["save","remove"],function(){
+    calculateOrderTotal(this.orderId)
+})
 
 const OrderItem = mongoose.model('OrderItem',orderItemSchema);
 
