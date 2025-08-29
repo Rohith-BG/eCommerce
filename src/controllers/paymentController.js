@@ -67,18 +67,18 @@ export async function deletePayment(req,res){
 
 export async function createRazorpayOrder(req,res){
     try{
-        const orderData = req?.body
+        const orderId = req?.query?.id
 
-        if(!orderData){
-            throw Object.assign(new Error(`orderData is required field`))
+        if(!orderId){
+            throw Object.assign(new Error(`orderId is a required field`))
         }
 
-        const order = await createOrder(orderData)
+        const order = await createOrder(orderId)
 
         res.status(200).json(order)
     }
     catch(err){
-        res.status(err.statusCode).json(err.description)
+        res.status(err.statusCode).json(err.stack)
     }
 }
 
@@ -90,11 +90,11 @@ export async function verifyPayment(req,res){
             throw Object.assign(new Error(`Required Fields are missing`),{statusCode:400})
         }
 
-        if(await verifyPaymentById(orderId,paymentId,signature)){
+        if(verifyPaymentById(orderId,paymentId,signature)){
             res.status(200).json(`payment successful`)
         }  
     }
     catch(err){
-        res.status(err.statusCode||500).json(err.stack)
+        res.status(err.statusCode).json(err.stack)
     }
 }

@@ -1,4 +1,6 @@
+import mongoose from "mongoose";
 import razorpay from "../configs/razorPay.js";
+import Orders from "../models/ordersModel.js";
 import Payment from "../models/paymentModel.js";
 import crypto from 'crypto'
 import dotenv from 'dotenv'
@@ -58,27 +60,34 @@ export async function deletePaymentById(paymentId){
     }
 }
 
-export async function createOrder(orderData){
+export async function createOrder(orderId){
     try{
-        const {amount,currency} = orderData;
-        const order = await razorpay.orders.create({
+        const order = await Orders.findById(orderId)
+        if(!order){
+            throw Object.assign(new Error(`order not found`),{statusCode:404})
+        }
+        const amount = order?.total 
+
+        if(!amount || amount<=0){
+            throw Object.assign(new Error(`Invalid amount`),{statusCode:400})
+        }
+
+        const razorpayOrder = await razorpay.orders.create({
             amount:amount*100,
-            currency
+            currency:"INR"
         });
 
-        if(!order){
-            throw Object.assign(new Error(`Razorpay order instance failed to create`),{statusCode:400})
+        if(!razorpayOrder){
+            throw Object.assign(new Error(`Razorpay instance order failed to create`),{statusCode:400})
         }
-        return order;
+        return razorpayOrder;
     }
     catch(err){
-        console.log(err);
-        throw err
-        
+        throw err  
     }
 }
 
-export async function verifyPaymentById(orderId,paymentId,signature){
+export  async function verifyPaymentById(orderId,paymentId,signature){
     try{
         const hmac = crypto.createHmac('sha256',process.env.RAZORPAY_KEYSECRET);
 
@@ -86,12 +95,11 @@ export async function verifyPaymentById(orderId,paymentId,signature){
         
         const generatedSignature = hmac.digest("hex")
 
-        if(generatedSignature == signature ){
-            return true 
+        if(generatedSignature !== signature ){
+            throw Object.assign(new Error(`Signature verification failed`),{statusCode:400})
         }
-        else{
-            throw Object.assign(new Error(`Payment failed`),{statusCode:400})
-        }
+        
+        return true ;
     }
     catch(err){
         throw err
