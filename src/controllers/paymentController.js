@@ -1,4 +1,4 @@
-import { deletePaymentById, getPaymentById, insertPayment, createOrder, updatePaymentById, verifyPaymentById } from "../services/paymentService.js"
+import { deletePaymentById, getPaymentById, insertPayment, createOrder, updatePaymentById, verifyPaymentTransaction } from "../services/paymentService.js"
 
 export async function createPayment(req,res){
     try{
@@ -84,15 +84,24 @@ export async function createRazorpayOrder(req,res){
 
 export async function verifyPayment(req,res){
     try{
-        const {orderId,paymentId,signature} = req?.body 
+        const {orderId,razorpayOrderId,paymentId,signature} = req?.body 
 
-        if(!orderId || !paymentId || !signature ){
+        if(!orderId ||!razorpayOrderId || !paymentId || !signature ){
             throw Object.assign(new Error(`Required Fields are missing`),{statusCode:400})
         }
 
-        if(verifyPaymentById(orderId,paymentId,signature)){
-            res.status(200).json(`payment successful`)
-        }  
+        const paymentDetails = {
+            orderId,
+            razorpayOrderId,
+            paymentId,
+            signature
+        }
+
+        if(!verifyPaymentTransaction(paymentDetails)){
+            throw Object.assign(`Can't validate the payment`,{statusCode:400})
+        }else{
+            res.status(200).json(`Payment is Successful`);
+        }
     }
     catch(err){
         res.status(err.statusCode).json(err.stack)

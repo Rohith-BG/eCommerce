@@ -87,21 +87,53 @@ export async function createOrder(orderId){
     }
 }
 
-export  async function verifyPaymentById(orderId,paymentId,signature){
+export function verifyPaymentSignature(razorpayOrderId,paymentId,signature){
     try{
-        const hmac = crypto.createHmac('sha256',process.env.RAZORPAY_KEYSECRET);
+        if(!process.env.RAZORPAY_KEYSECRET){
+            throw new Error(`environment variable is not configured`)
+        }
+        
+        const hmac = crypto.createHmac('sha256',process?.env?.RAZORPAY_KEYSECRET);
 
-        hmac.update(orderId+"|"+paymentId)
+        hmac.update(razorpayOrderId+"|"+paymentId)
         
         const generatedSignature = hmac.digest("hex")
 
         if(generatedSignature !== signature ){
-            throw Object.assign(new Error(`Signature verification failed`),{statusCode:400})
+            return false;
         }
-        
+
         return true ;
     }
     catch(err){
         throw err
+    }
+}
+
+export async function verifyPaymentTransaction(paymentDetails){
+    const session = await mongoose.startSession()
+    try{
+        const {orderId,razorpayOrderId,paymentId,signature} = paymentDetails ;
+
+        if(!verifyPaymentSignature(razorpayOrderId,paymentId,signature)){
+            throw Object.assign(new Error(`Failed to verify the Signature`),{statusCode:400})
+        }    
+        session.startTransaction();
+
+        await Orders.findByIdAndUpdate(orderId,{$set:{orderStatus:"INITIATED"}},{session})
+
+        await Payment.findOneAndUpdate({orderId:orderId},{$set:{paymentStatus:"PAID"}},{session})
+
+        await session.commitTransaction();
+
+        return true;
+        
+    }
+    catch(err){
+        await session.abortTransaction();
+        throw err ;
+    }
+    finally{
+        session.endSession();
     }
 }
